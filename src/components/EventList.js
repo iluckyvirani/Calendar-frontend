@@ -1,6 +1,6 @@
 export const EventList = ({ date, events, onSelectTime, onEventClick, }) => {
     return (
-        <div className="w-3/4 p-6">
+        <div className="w-3/4 pl-6">
             <h2 className="text-2xl font-bold mb-4">{date.toDateString()}</h2>
             <div className="bg-white shadow-lg rounded-lg p-4">
                 {Array.from({ length: 12 }, (_, i) => {
