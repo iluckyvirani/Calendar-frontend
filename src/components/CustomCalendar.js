@@ -17,21 +17,21 @@ const CustomCalendar = () => {
 
     const baseurl = process.env.REACT_APP_BASE_URL
 
-    const fetchEvents =  useCallback( async () => {
+    const fetchEvents = useCallback(async () => {
         try {
             const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-            const formattedDate = localDate.toISOString().split("T")[0]; 
+            const formattedDate = localDate.toISOString().split("T")[0];
 
             const response = await axios.get(`${baseurl}api/events?date=${formattedDate}`);
             setEvents(response.data);
         } catch (error) {
             console.log("Error fetching events:", error);
         }
-    },[date])
+    }, [date])
 
 
     useEffect(() => {
-        fetchEvents(); 
+        fetchEvents();
     }, [fetchEvents])
 
     const handleEventClick = (event) => {
@@ -51,11 +51,11 @@ const CustomCalendar = () => {
             await axios.post(`${baseurl}api/add`, {
                 title: currentEvent.title,
                 description: currentEvent.description || "No description",
-                date: adjustedDate.toISOString().split("T")[0], 
+                date: adjustedDate.toISOString().split("T")[0],
                 time: selectedTime,
             });
 
-            fetchEvents(); 
+            fetchEvents();
 
             setModalOpen(false);
             setCurrentEvent({ title: "", description: "" });
@@ -93,28 +93,36 @@ const CustomCalendar = () => {
         setSelectedTime("");
     };
     return (
-        <div className="flex flex-col md:flex-row h-screen">
-            <CalendarSidebar date={date} onDateChange={setDate} />
-            <EventList 
-                date={date} 
-                events={events} 
-                onSelectTime={(time) => {
-                    setSelectedTime(time);
-                    setIsEditing(false);
-                    setModalOpen(true);
-                }} 
-                onEventClick={handleEventClick}
-            />
-            <EventModal 
-                isOpen={modalOpen} 
-                onClose={closeModal} 
-                onSave={isEditing ? handleUpdateEvent : handleAddEvent} 
-                onDelete={isEditing ? handleDeleteEvent : null} 
-                event={currentEvent} 
-                setEvent={setCurrentEvent} 
-                selectedTime={selectedTime} 
-                isEditing={isEditing} 
-            />
+        <div className="flex flex-col h-screen">
+            <h1 className="text-center font-bold text-2xl md:text-3xl text-gray-800 mb-2">
+                Plan & Schedule Your Events
+            </h1>
+            <p className="text-center font-semibold text-sm text-gray-600 mb-4">
+                Select a date & time to add an event to your calendar.
+            </p>
+            <div className="flex flex-col md:flex-row h-screen">
+                <CalendarSidebar date={date} onDateChange={setDate} />
+                <EventList
+                    date={date}
+                    events={events}
+                    onSelectTime={(time) => {
+                        setSelectedTime(time);
+                        setIsEditing(false);
+                        setModalOpen(true);
+                    }}
+                    onEventClick={handleEventClick}
+                />
+                <EventModal
+                    isOpen={modalOpen}
+                    onClose={closeModal}
+                    onSave={isEditing ? handleUpdateEvent : handleAddEvent}
+                    onDelete={isEditing ? handleDeleteEvent : null}
+                    event={currentEvent}
+                    setEvent={setCurrentEvent}
+                    selectedTime={selectedTime}
+                    isEditing={isEditing}
+                />
+            </div>
         </div>
     );
 };
