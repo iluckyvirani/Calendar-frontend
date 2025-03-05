@@ -93,7 +93,7 @@ const CustomCalendar = () => {
         setSelectedTime("");
     };
     return (
-        <div className="flex h-screen">
+        <div className="flex flex-col md:flex-row h-screen">
             <CalendarSidebar date={date} onDateChange={setDate} />
             <EventList 
                 date={date} 
