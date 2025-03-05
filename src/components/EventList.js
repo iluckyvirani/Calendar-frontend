@@ -9,6 +9,9 @@ export const EventList = ({ date, events, onSelectTime }) => {
                     const formattedHour = hour > 12 ? hour - 12 : hour;
                     const timeSlot = `${formattedHour}:00 ${period}`;
 
+                    // Find events for this specific time slot
+                    const slotEvents = events.filter(event => event.time === timeSlot);
+
                     return (
                         <div
                             key={i}
@@ -16,10 +19,7 @@ export const EventList = ({ date, events, onSelectTime }) => {
                             onClick={() => onSelectTime(timeSlot)}
                         >
                             <span className="font-semibold text-gray-700">{timeSlot}</span>
-                            {events.filter(event =>
-                                new Date(event.date).toDateString() === date.toDateString() &&
-                                event.time === `${formattedHour}:00`
-                            ).map((event, idx) => (
+                            {slotEvents.map((event, idx) => (
                                 <div key={idx} className="bg-blue-500 text-white p-2 rounded mt-2">
                                     {event.title}
                                 </div>
@@ -31,4 +31,3 @@ export const EventList = ({ date, events, onSelectTime }) => {
         </div>
     );
 };
-
