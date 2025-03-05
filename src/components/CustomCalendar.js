@@ -15,15 +15,14 @@ const CustomCalendar = () => {
     const adjustedDate = new Date(date);
     adjustedDate.setDate(adjustedDate.getDate() + 1);
 
-
-   ;
+    const baseurl = process.env.REACT_APP_BASE_URL
 
     const fetchEvents =  useCallback( async () => {
         try {
             const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
             const formattedDate = localDate.toISOString().split("T")[0]; 
 
-            const response = await axios.get(`http://localhost:5000/api/events?date=${formattedDate}`);
+            const response = await axios.get(`${baseurl}api/events?date=${formattedDate}`);
             setEvents(response.data);
         } catch (error) {
             console.log("Error fetching events:", error);
@@ -49,7 +48,7 @@ const CustomCalendar = () => {
         }
 
         try {
-            await axios.post("http://localhost:5000/api/add", {
+            await axios.post(`${baseurl}api/add`, {
                 title: currentEvent.title,
                 description: currentEvent.description || "No description",
                 date: adjustedDate.toISOString().split("T")[0], 
@@ -69,7 +68,7 @@ const CustomCalendar = () => {
     const handleUpdateEvent = async () => {
         if (!currentEvent._id) return;
         try {
-            await axios.put(`http://localhost:5000/api/event/${currentEvent._id}`, currentEvent);
+            await axios.put(`${baseurl}api/event/${currentEvent._id}`, currentEvent);
             fetchEvents();
             closeModal();
         } catch (error) {
@@ -80,7 +79,7 @@ const CustomCalendar = () => {
     const handleDeleteEvent = async () => {
         if (!currentEvent._id) return;
         try {
-            await axios.delete(`http://localhost:5000/api/event/${currentEvent._id}`);
+            await axios.delete(`${baseurl}api/event/${currentEvent._id}`);
             fetchEvents();
             closeModal();
         } catch (error) {
