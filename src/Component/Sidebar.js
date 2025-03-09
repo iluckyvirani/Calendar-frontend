@@ -44,7 +44,7 @@ const Sidebar = ({ onAddEvent, events, selectedDate, onDateChange, onDeleteEvent
     };
 
     return (
-        <div className="w-full md:w-[35%] bg-grey-100 p-4 border-r h-screen overflow-y-auto">
+        <div className="w-full md:w-[35%] bg-grey-100 p-4 border-r h-full">
             <button onClick={onAddEvent} className="border p-2 rounded-full flex items-center shadow-md hover:shadow-2xl mb-4">
                 <img src={img} alt="create_event" className="w-7 h-7" />
                 <span className="pl-3 pr-7"> Create</span>
