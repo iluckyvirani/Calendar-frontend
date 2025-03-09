@@ -12,8 +12,8 @@ const Sidebar = ({ onAddEvent, events, selectedDate, onDateChange, onDeleteEvent
     const [smallCalendarDate, setSmallCalendarDate] = useState(selectedDate);
 
     const handleDateSelect = (date) => {
-        setSmallCalendarDate(date);  
-        onDateChange(date);          
+        setSmallCalendarDate(date);
+        onDateChange(date);
     };
 
     const dayPropGetter = (date) => {
@@ -27,7 +27,7 @@ const Sidebar = ({ onAddEvent, events, selectedDate, onDateChange, onDeleteEvent
         let newDate = new Date(smallCalendarDate);
         if (action === "prev") newDate.setMonth(newDate.getMonth() - 1);
         if (action === "next") newDate.setMonth(newDate.getMonth() + 1);
-        
+
         setSmallCalendarDate(newDate);
         onDateChange(newDate);
     };
@@ -36,6 +36,12 @@ const Sidebar = ({ onAddEvent, events, selectedDate, onDateChange, onDeleteEvent
         moment(event.start).isSame(selectedDate, "day") ||
         moment(event.end).isSame(selectedDate, "day")
     );
+
+    const handleDelete = (id) => {
+        if (window.confirm("Are you sure you want to delete this event?")) {
+            onDeleteEvent(id);
+        }
+    };
 
     return (
         <div className="w-full md:w-[35%] bg-grey-100 p-4 border-r h-screen overflow-y-auto">
@@ -60,9 +66,9 @@ const Sidebar = ({ onAddEvent, events, selectedDate, onDateChange, onDeleteEvent
                     views={["month"]}
                     date={smallCalendarDate}
                     selectable
-                    onSelectSlot={(slotInfo) => handleDateSelect(slotInfo.start)} 
+                    onSelectSlot={(slotInfo) => handleDateSelect(slotInfo.start)}
                     onSelectEvent={(event) => handleDateSelect(event.start)}
-                    events={[]} 
+                    events={[]}
                     toolbar={false}
                     style={{ height: 300 }}
                     dayPropGetter={dayPropGetter}
@@ -83,7 +89,7 @@ const Sidebar = ({ onAddEvent, events, selectedDate, onDateChange, onDeleteEvent
                                         {moment(event.start).format("h:mm A")} - {moment(event.end).format("h:mm A")}
                                     </div>
                                 </div>
-                                <button onClick={() => onDeleteEvent(event.id)} className="text-white hover:text-red-700">
+                                <button onClick={() => handleDelete(event.id)} className="text-white hover:text-red-700">
                                     <MdDelete className="w-5 h-5" />
                                 </button>
                             </li>
