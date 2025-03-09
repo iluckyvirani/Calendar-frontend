@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,8 +12,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: #f8fafd; */
   background: linear-gradient(to right, #f8f9fa, #eef1f5);
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }
 
 code {
@@ -18,42 +24,43 @@ code {
     monospace;
 }
 
-.custom-calendar {
-  border: none !important;
-  background: transparent !important;
-  font-family: 'Poppins', sans-serif;
+
+
+
+.rbc-month-view .rbc-day-bg {
+  transition: background-color 0.3s ease-in-out;
 }
 
-.custom-calendar .react-calendar__tile {
-  border-radius: 50%;
-  transition: 0.3s;
-  padding: 12px;
-  text-align: center;
-  font-weight: 500;
-  color: #333;
-}
-
-.custom-calendar .react-calendar__tile:enabled:hover {
-  background: rgba(0, 123, 255, 0.1);
-  color: #007bff;
-  font-weight: bold;
-}
-
-.custom-calendar .react-calendar__tile--active {
-  background: #007bff !important;
-  color: white !important;
-  font-weight: 600;
-}
-
-.custom-calendar .react-calendar__tile--now {
-  background: #ffcc00 !important;
-  color: black !important;
-  border-radius: 50%;
-  font-weight: bold;
-}
-
-.react-calendar__month-view__days__day {
-  font-size: 16px !important;
+.rbc-month-view .rbc-day-bg:hover {
+  background-color: #007bff !important;
 }
 
 
+.rbc-toolbar .rbc-btn-group button:hover {
+  background-color: #007bff !important;
+  color: #ffffff !important;
+}
+.rbc-toolbar button:active, .rbc-toolbar button.rbc-active{
+  background-color: #007bff !important;
+  color: #ffffff !important;
+}
+
+
+.rbc-selected-date {
+  background-color: #007bff !important;
+}
+
+
+.rbc-header {
+  font-weight: 400 !important;
+  font-size: 13px !important;
+}
+
+.rbc-today {
+  background-color: #b0cadb !important;
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td{
+  color: #ffffff !important;
+  font-weight: 400 !important;
+}
