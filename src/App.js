@@ -40,11 +40,11 @@ const App = () => {
         try {
             if (event.id) {
                 // Update existing event
-                await axios.put(`http://localhost:5000/api/event/${event.id}`, event);
+                await axios.put(`${baseurl}api/event/${event.id}`, event);
                 toast.success("Event updated successfully");
             } else {
                 // Add new event
-                await axios.post(`http://localhost:5000/api/add`, event);
+                await axios.post(`${baseurl}api/add`, event);
                 toast.success("Event added successfully");
             }
             fetchEvents();
