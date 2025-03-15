@@ -1,21 +1,12 @@
 import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+import CustomCalendar from "./CustomCalendar.js";
 import EventModal from "./EventModal.js";
 
-const localizer = momentLocalizer(moment);
-
-const CalendarView = ({ events, onSave, onDelete, selectedDate }) => {
+const CalendarView = ({ events, onSave, onDelete, selectedDate, onTodayClick }) => {
     const [view, setView] = useState("day");
-    const [date, setDate] = useState(selectedDate);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedSlot, setSelectedSlot] = useState(null);
-
-    React.useEffect(() => {
-        setDate(selectedDate);
-    }, [selectedDate]);
 
     const handleSelectSlot = (slotInfo) => {
         setSelectedEvent(null);
@@ -23,11 +14,6 @@ const CalendarView = ({ events, onSave, onDelete, selectedDate }) => {
         setModalOpen(true);
     };
 
-    const handleSelectEvent = (event) => {
-        setSelectedEvent(event);
-        setSelectedSlot({ start: event.start, end: event.end });
-        setModalOpen(true);
-    };
 
     const handleSaveEvent = (event) => {
         if (selectedEvent) {
@@ -46,26 +32,38 @@ const CalendarView = ({ events, onSave, onDelete, selectedDate }) => {
     };
 
     return (
-        <div className="h-screen w-full p-5">
-            <Calendar
-                localizer={localizer}
+        <div className="h-screen w-full p-6 bg-gray-100">
+            <div className="flex justify-between gap-1 items-center mb-6">
+                <button
+                    className="px-6 py-2 rounded-lg bg-[#2558d3] text-white hover:bg-blue-600 transition-all duration-300"
+                    onClick={onTodayClick} 
+                >
+                    Today
+                </button>
+
+                <div className="flex gap-2">
+                    {["day", "week", "month"].map((type) => (
+                        <button
+                            key={type}
+                            className={`px-6 py-2 rounded-lg transition-all duration-300 ${view === type
+                                ? "bg-gradient-to-r from-[#2558d3] to-indigo-500 text-white shadow-md"
+                                : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-200"
+                                }`}
+                            onClick={() => setView(type)}
+                        >
+                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <CustomCalendar
                 events={events}
-                startAccessor="start"
-                endAccessor="end"
-                view={view}
-                onView={setView}
-                date={date}
-                onNavigate={(newDate) => setDate(newDate)}
-                onSelectEvent={handleSelectEvent}
                 onSelectSlot={handleSelectSlot}
-                selectable
-                style={{ height: "90vh" }}
-                eventPropGetter={(event) => ({
-                    style: {
-                        backgroundColor: event.color,
-                    },
-                })}
+                selectedDate={selectedDate} 
+                view={view}
             />
+
             {modalOpen && (
                 <EventModal
                     isOpen={modalOpen}

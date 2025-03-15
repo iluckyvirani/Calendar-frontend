@@ -26,41 +26,37 @@ code {
 
 
 
-
-.rbc-month-view .rbc-day-bg {
-  transition: background-color 0.3s ease-in-out;
+.day-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+  line-height: 40px;
+  transition: all 0.2s ease-in-out;
 }
 
-.rbc-month-view .rbc-day-bg:hover {
-  background-color: #007bff !important;
+.current-day {
+  background-color: #2558d3;
+  color: white;
 }
 
-
-.rbc-toolbar .rbc-btn-group button:hover {
-  background-color: #007bff !important;
-  color: #ffffff !important;
-}
-.rbc-toolbar button:active, .rbc-toolbar button.rbc-active{
-  background-color: #007bff !important;
-  color: #ffffff !important;
+.selected-day {
+  background-color: #c6e7ff;
+  color: black;
 }
 
-
-.rbc-selected-date {
-  background-color: #007bff !important;
+.day-box:hover {
+  background-color: #e0e0e0;
 }
 
-
-.rbc-header {
-  font-weight: 400 !important;
-  font-size: 13px !important;
-}
-
-.rbc-today {
-  background-color: #b0cadb !important;
-}
-
-.rbc-agenda-view table.rbc-agenda-table tbody > tr > td{
-  color: #ffffff !important;
-  font-weight: 400 !important;
+/* Tailwind CSS for Responsiveness */
+@media (max-width: 640px) {
+  .week-view-day {
+      width: 100%; /* Full width for mobile */
+  }
+  .month-view-day {
+      font-size: 0.875rem; /* Smaller font size for mobile */
+      padding: 0.25rem; /* Reduced padding for mobile */
+  }
 }

@@ -3,16 +3,16 @@ import moment from "moment";
 import { LuCheck } from "react-icons/lu";
 
 const labelsClasses = [
-    "indigo",
+    // "indigo",
     "gray",
-    "green",
+    // "green",
     "blue",
     "red",
     "purple",
 ];
 
 
-const EventModal = ({ isOpen, onClose, onSave, onDelete, selectedSlot, event, isEditing }) => {
+const EventModal = ({ isOpen, onClose, onSave, selectedSlot, event, isEditing }) => {
     const [selectedLabel, setSelectedLabel] = useState(labelsClasses[0]);
 
     const [formData, setFormData] = useState({
@@ -42,12 +42,6 @@ const EventModal = ({ isOpen, onClose, onSave, onDelete, selectedSlot, event, is
         onClose();
     };
 
-    const handleDelete = () => {
-        if (window.confirm("Are you sure you want to delete this event?")) {
-            onDelete(); 
-            onClose();
-        }
-    };
 
     if (!isOpen) return null;
 
@@ -113,14 +107,6 @@ const EventModal = ({ isOpen, onClose, onSave, onDelete, selectedSlot, event, is
                 </div>
 
                 <div className="flex justify-between mt-6">
-                    {isEditing && (
-                        <button
-                            onClick={handleDelete}
-                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-                        >
-                            Delete
-                        </button>
-                    )}
                     <div className="flex gap-3">
                         <button
                             onClick={onClose}
